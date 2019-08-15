@@ -48,8 +48,7 @@ GIT_VERSION = $$system($$BASE_GIT_COMMAND describe --always --tags 2> $$NULL_DEV
         isEmpty(GIT_COMMIT_COUNT) {
             GIT_COMMIT_COUNT = 0
         }
-        GIT_VERSION = $$VERSION-$$GIT_COMMIT_COUNT
-#-g$$GIT_VERSION
+        GIT_VERSION = $$VERSION-$$GIT_COMMIT_COUNT-g$$GIT_VERSION
     }
 }
 
@@ -84,11 +83,15 @@ scriptsql.files = $$files($$PWD/SQL/*.sql)
 CONFIG += c++11
 
 SOURCES += \
+        DataBases/databases.cpp \
+        DataBases/databasesettings.cpp \
         LoggingCategories/loggingcategories.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        DataBases/databases.h \
+        DataBases/databasesettings.h \
         LoggingCategories/loggingcategories.h \
         mainwindow.h
 
