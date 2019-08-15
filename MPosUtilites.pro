@@ -37,7 +37,6 @@ BASE_GIT_COMMAND = git --git-dir $$PWD/.git --work-tree $$PWD
 
 # Trying to get version from git tag / revision
 GIT_VERSION = $$system($$BASE_GIT_COMMAND describe --always --tags 2> $$NULL_DEVICE)
-message($$GIT_VERSION)
 
 # Check if we only have hash without version number
 !contains(GIT_VERSION,\d+\.\d+\.\d+) {
@@ -64,8 +63,6 @@ win32 { # On windows version can only be numerical so remove commit hash
     VERSION ~= s/\.\d+\.[a-f0-9]{6,}//
 }
 
-
-
 # Adding C preprocessor #DEFINE so we can use it in C++ code
 # also here we want full version on every system so using GIT_VERSION
 DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
@@ -75,16 +72,24 @@ win32: {
         BUILD_DATE = $$member(BUILD_DATE,0)_$$member(BUILD_DATE,1)
 }
 unix: BUILD_DATE = $$system( date "+%Y%m%d_%H%M" )
-message("BUILD_DATE= $$BUILD_DATE")
+
 DEFINES += BUILD_DATE=\\\"$$BUILD_DATE\\\"
+
+CONFIG += file_copies
+COPIES += scriptsql
+
+scriptsql.path = $$OUT_PWD/SQL
+scriptsql.files = $$files($$PWD/SQL/*.sql)
 
 CONFIG += c++11
 
 SOURCES += \
+        LoggingCategories/loggingcategories.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        LoggingCategories/loggingcategories.h \
         mainwindow.h
 
 FORMS += \
@@ -94,3 +99,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    SQL/programm.sql
