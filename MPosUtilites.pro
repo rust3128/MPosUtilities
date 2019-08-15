@@ -64,10 +64,19 @@ win32 { # On windows version can only be numerical so remove commit hash
     VERSION ~= s/\.\d+\.[a-f0-9]{6,}//
 }
 
+
+
 # Adding C preprocessor #DEFINE so we can use it in C++ code
 # also here we want full version on every system so using GIT_VERSION
 DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
-message($$GIT_VERSION)
+
+win32: {
+        BUILD_DATE = $$system( date /t ) $$system( time /t )
+        BUILD_DATE = $$member(BUILD_DATE,0)_$$member(BUILD_DATE,1)
+}
+unix: BUILD_DATE = $$system( date "+%Y%m%d_%H%M" )
+message("BUILD_DATE= $$BUILD_DATE")
+DEFINES += BUILD_DATE=\\\"$$BUILD_DATE\\\"
 
 CONFIG += c++11
 
