@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QSplashScreen>
 
 
 // Умный указатель на файл логирования
@@ -19,12 +20,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     // Устанавливаем файл логирования
-    m_logFile.reset(new QFile("MPosUtils.log"));
+    m_logFile.reset(new QFile("MPosUtilites.log"));
     // Открываем файл логирования
     m_logFile.data()->open(QFile::Append | QFile::Text);
     // Устанавливаем обработчик
     qInstallMessageHandler(messageHandler);
-    qInfo(logInfo()) << "Запуск программы. Версия: " << GIT_VERSION << "Дата сборки:" << BUILD_DATE;
+    qInfo(logInfo()) << "Запуск программы. Версия:" << GIT_VERSION << "Дата сборки:" << BUILD_DATE;
 
 #ifndef QT_NO_TRANSLATION
     //Определяем имя языкового файла в зависимости от текущей локали
@@ -38,15 +39,33 @@ int main(int argc, char *argv[])
         qWarning(logWarning()) << "Не удалось загрузить языковый файл.";
 #endif
 
+    QPixmap pix(":/Images/splash.png");
+    QSplashScreen sp(pix);
+    QString ver, message;
+    ver = GIT_VERSION;
+    message = "Утилиты MPos";
+
+    sp.setPixmap(pix);
+
+
+    sp.show();
+//    sp.showMessage(message);
+
     DataBases *db = new DataBases();
     if(!db->connectDB()){
         qCritical(logCritical()) << "Аварийное завершение работы";
         return 1;
     }
 
-    MainWindow w;
-    w.show();
+    if(!db->connectCenralDB()){
+        qInfo(logInfo()) << "Завершение работы. Не удалось подключится к центральной базе.";
+        return 1;
+    }
 
+    MainWindow w;
+    w.showMaximized();
+
+    sp.finish(&w);
     return a.exec();
 }
 
@@ -55,19 +74,32 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     // Открываем поток записи в файл
     QTextStream out(m_logFile.data());
     QTextStream console(stdout);
-
     // Записываем дату записи
     out << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz ");
-
     // По типу определяем, к какому уровню относится сообщение
     switch (type)
     {
 #ifdef QT_DEBUG
-    case QtInfoMsg:     out << "[INF] "; console << "Info:     " << context.category << ": " << "[" << context.function << " Line :" << context.line << "] " << msg << endl; break;
-    case QtDebugMsg:    out << "[DBG] "; console << "Debug:    " << msg << endl; break;
-    case QtWarningMsg:  out << "[WRN] "; console << "Warning:  " << msg << endl; break;
-    case QtCriticalMsg: out << "[CRT] "; console << "Critical: " << context.category << ": " << "[" << context.function << " Line :" << context.line << "] " << msg << endl; break;
-    case QtFatalMsg:    out << "[FTL] "; console << "Fatality: " << msg << endl; break;
+    case QtInfoMsg:
+        out << "[INF] ";
+        console << "Info:     " << "[" << context.function << " File: " << context.file << " Line: " << context.line << "] " << msg << endl;
+        break;
+    case QtDebugMsg:
+        out << "[DBG] " ;
+        console << "Debug:    " << "[" << context.function << " File: " << context.file << " Line: " << context.line << "] " << msg << endl;
+        break;
+    case QtWarningMsg:
+        out << "[WRN] ";
+        console << "Warning:  " << "[" << context.function << " File: " << context.file << " Line: " << context.line << "] " << msg << endl;
+        break;
+    case QtCriticalMsg:
+        out << "[CRT] ";
+        console << "Critical: " << "[" << context.function << " File: " << context.file << " Line: " << context.line << "] " << msg << endl;
+        break;
+    case QtFatalMsg:
+        out << "[FTL] ";
+        console << "Fatality: " << "[" << context.function << " File: " << context.file << " Line: " << context.line << "] " << msg << endl;
+        break;
 #else
     case QtInfoMsg:     out << "[INF] "; break;
     case QtDebugMsg:    out << "[DBG] "; break;
@@ -75,10 +107,11 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     case QtCriticalMsg: out << "[CRT] "; break;
     case QtFatalMsg:    out << "[FTL] "; break;
 #endif
+
     }
+    out << "*[" << context.function << " File: " << context.file << " Line: " << context.line << "]* ";
     // Записываем в вывод категорию сообщения и само сообщение
-    out << context.category << ": " << "[" << context.function << " Line :" << context.line << "] ";
-    out << msg << endl;
+    out << context.category << ": " << msg << endl;
     // Очищаем буферизированные данные
     out.flush();
     console.flush();

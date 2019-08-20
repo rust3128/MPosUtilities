@@ -83,19 +83,24 @@ scriptsql.files = $$files($$PWD/SQL/*.sql)
 CONFIG += c++11
 
 SOURCES += \
+        ConnectionSettingDialog/connectionsettingdialog.cpp \
         DataBases/databases.cpp \
         DataBases/databasesettings.cpp \
+        DataBases/options.cpp \
         LoggingCategories/loggingcategories.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        ConnectionSettingDialog/connectionsettingdialog.h \
         DataBases/databases.h \
         DataBases/databasesettings.h \
+        DataBases/options.h \
         LoggingCategories/loggingcategories.h \
         mainwindow.h
 
 FORMS += \
+        ConnectionSettingDialog/connectionsettingdialog.ui \
         mainwindow.ui
 
 # Default rules for deployment.
@@ -105,3 +110,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     SQL/programm.sql
+
+RESOURCES += \
+    resourses.qrc

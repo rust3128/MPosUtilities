@@ -8,6 +8,7 @@ public:
     static const QString NAME;
     static const QString HOSTNAME;
     static const QString CONFIG_FILE_NAME;
+    static const QString MAIN_SQL_FILE_NAME;
 };
 
 #endif // DATABASESETTINGS_H
