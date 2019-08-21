@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>Images/splash.png</file>
+        <file>Images/all_check.png</file>
+        <file>Images/deleteSelected.png</file>
+        <file>Images/removeAll.png</file>
+        <file>Images/selectAllRegion.png</file>
+        <file>Images/selectRegion.png</file>
+        <file>Images/selectTerminal.png</file>
     </qresource>
 </RCC>

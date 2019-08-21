@@ -20,6 +20,8 @@ private slots:
     void createModels();
     void on_actionTerminals_triggered();
 
+    void on_actionFuelName_triggered();
+
 private:
 
 private:

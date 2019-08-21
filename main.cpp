@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
               "<p><span style=' font-size:12pt;'>Пожалуйста подождите....</span></p></body></html>";
 
     sp.setPixmap(pix);
-    sp.showMessage(message,Qt::AlignHCenter | Qt::AlignBottom, Qt::blue);
+    sp.showMessage(message,Qt::AlignHCenter | Qt::AlignTop, Qt::blue);
     sp.show();
 
 

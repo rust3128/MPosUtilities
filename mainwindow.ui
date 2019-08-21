@@ -28,7 +28,6 @@
      <string>Утилиты</string>
     </property>
     <addaction name="actionFuelName"/>
-    <addaction name="actionTerminals"/>
    </widget>
    <addaction name="menuUtils"/>
   </widget>
@@ -45,24 +44,16 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionTerminals"/>
+   <addaction name="actionFuelName"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionFuelName">
-   <property name="text">
-    <string>Наименования топлива</string>
-   </property>
-  </action>
-  <action name="actionTerminals">
    <property name="icon">
     <iconset resource="resourses.qrc">
      <normaloff>:/Images/splash.png</normaloff>:/Images/splash.png</iconset>
    </property>
    <property name="text">
-    <string>Terminals</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+T</string>
+    <string>Наименования топлива</string>
    </property>
   </action>
  </widget>

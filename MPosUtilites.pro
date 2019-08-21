@@ -87,7 +87,9 @@ SOURCES += \
         DataBases/databases.cpp \
         DataBases/databasesettings.cpp \
         DataBases/options.cpp \
+        FuelNameDialog/fuelnamedialog.cpp \
         LoggingCategories/loggingcategories.cpp \
+        SelectTerminalsForm/selectterminalsform.cpp \
         main.cpp \
         mainwindow.cpp
 
@@ -96,11 +98,15 @@ HEADERS += \
         DataBases/databases.h \
         DataBases/databasesettings.h \
         DataBases/options.h \
+        FuelNameDialog/fuelnamedialog.h \
         LoggingCategories/loggingcategories.h \
+        SelectTerminalsForm/selectterminalsform.h \
         mainwindow.h
 
 FORMS += \
         ConnectionSettingDialog/connectionsettingdialog.ui \
+        FuelNameDialog/fuelnamedialog.ui \
+        SelectTerminalsForm/selectterminalsform.ui \
         mainwindow.ui
 
 # Default rules for deployment.
