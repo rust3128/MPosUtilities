@@ -18,6 +18,8 @@ public:
 
 private slots:
     void createModels();
+    void on_actionTerminals_triggered();
+
 private:
 
 private:

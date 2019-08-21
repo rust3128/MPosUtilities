@@ -1,24 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1004</width>
+    <height>750</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1004</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuUtils">
+    <property name="title">
+     <string>Утилиты</string>
+    </property>
+    <addaction name="actionFuelName"/>
+    <addaction name="actionTerminals"/>
+   </widget>
+   <addaction name="menuUtils"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="iconSize">
+    <size>
+     <width>64</width>
+     <height>64</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionTerminals"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFuelName">
+   <property name="text">
+    <string>Наименования топлива</string>
+   </property>
+  </action>
+  <action name="actionTerminals">
+   <property name="icon">
+    <iconset resource="resourses.qrc">
+     <normaloff>:/Images/splash.png</normaloff>:/Images/splash.png</iconset>
+   </property>
+   <property name="text">
+    <string>Terminals</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
- <resources/>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resourses.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     createModels();
-//    QTimer::singleShot(10, this, &MainWindow::createModels);
 }
 
 MainWindow::~MainWindow()
@@ -26,7 +25,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 }
 void MainWindow::createModels()
 {
-    qInfo(logInfo()) << "Greate Model startted" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
+    QApplication::processEvents();
+    qDebug(logDebug()) << "Greate Model startted" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
     modelTerminals = new QSqlQueryModel(this);
     modelTerminals->setQuery("SELECT DISTINCT t.TERMINAL_ID, TRIM(t.NAME), t.OWNER_ID from terminals t "
                              "LEFT JOIN shifts s ON s.TERMINAL_ID = t.TERMINAL_ID "
@@ -34,11 +34,10 @@ void MainWindow::createModels()
                              "ORDER BY t.TERMINAL_ID");
     modelTerminals->setHeaderData(0, Qt::Horizontal,"АЗС");
     modelTerminals->setHeaderData(1, Qt::Horizontal,"Название терминала");
-    qInfo(logInfo()) << "Greate Model finished" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");;
+    qDebug(logDebug()) << "Greate Model finished" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");;
 }
 
+void MainWindow::on_actionTerminals_triggered()
+{
 
-
-
-
-
+}

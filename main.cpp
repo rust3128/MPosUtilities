@@ -43,13 +43,16 @@ int main(int argc, char *argv[])
     QSplashScreen sp(pix);
     QString ver, message;
     ver = GIT_VERSION;
-    message = "Утилиты MPos";
+    message = "<html><head/><body><p><span style=' font-size:16pt; font-weight:600;'>Утилиты MPos.</span></p>"
+              "<p><span style=' font-size:12pt;'>Идет загрузка параметров.</span></p>"
+              "<p><span style=' font-size:12pt;'>Пожалуйста подождите....</span></p></body></html>";
 
     sp.setPixmap(pix);
-
-
+    sp.showMessage(message,Qt::AlignHCenter | Qt::AlignBottom, Qt::blue);
     sp.show();
-//    sp.showMessage(message);
+
+
+
 
     DataBases *db = new DataBases();
     if(!db->connectDB()){
@@ -63,7 +66,7 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
-    w.showMaximized();
+    w.show();
 
     sp.finish(&w);
     return a.exec();
