@@ -7,5 +7,6 @@
         <file>Images/selectAllRegion.png</file>
         <file>Images/selectRegion.png</file>
         <file>Images/selectTerminal.png</file>
+        <file>Images/fuellogo.png</file>
     </qresource>
 </RCC>

@@ -9,7 +9,6 @@ FuelNameDialog::FuelNameDialog(QSqlQueryModel *mod, QWidget *parent) :
 
 {
     ui->setupUi(this);
-    qInfo(logInfo()) << "Model Row count" << modelTerms->rowCount();
     connect(this,&FuelNameDialog::signalSendModel,ui->widget,&SelectTerminalsForm::slotGetModel);
     emit signalSendModel(modelTerms);
 

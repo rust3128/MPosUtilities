@@ -20,7 +20,9 @@ public slots:
     void slotGetModel(QSqlQueryModel* mod);
 private slots:
     void on_toolButtonSelectTerminal_clicked();
-
+private:
+    void createUI();
+    void fillingTerminals(QList<QModelIndex> listIdx);
 private:
     Ui::SelectTerminalsForm *ui;
     QSqlQueryModel *modTerminals;
