@@ -26,14 +26,25 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_pushButtonDeSelectAll_clicked();
+
+    void on_pushButtonSelectAll_clicked();
+
 private:
-    void createUI();
+    void createUITerminal();
+    void createUITerminalsRegion();
+    void createUIRegion();
+    void comboBoxActivatedTerminal(int idx);
+    void comboBoxActivatedTerminalRegions(int idx);
+    void comboBoxActivatedRegion(int idx);
+    void appendTerminals(int idx);
 private:
     Ui::AddTerminalsDialog *ui;
     QSqlQueryModel *m_modelTerminals;
     QSortFilterProxyModel *m_proxyModel;
     int m_selectType;
     QList<QModelIndex> m_selectedTerminals;
+
 };
 
 #endif // ADDTERMINALSDIALOG_H

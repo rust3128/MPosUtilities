@@ -47,6 +47,30 @@ void SelectTerminalsForm::on_toolButtonSelectTerminal_clicked()
     addTerm->deleteLater();
 }
 
+void SelectTerminalsForm::on_toolButtonSelectTermRegions_clicked()
+{
+    AddTerminalsDialog *addTerm = new AddTerminalsDialog(modTerminals, TERMINALS_REGION_SELECTED,this);
+    addTerm->move(this->parentWidget()->geometry().center().x() - addTerm->geometry().center().x(),
+                  this->parentWidget()->geometry().center().y() - addTerm->geometry().center().y());
+    if(addTerm->exec() == QDialog::Accepted){
+        fillingTerminals(addTerm->getSelectedTerminals());
+    }
+
+    addTerm->deleteLater();
+}
+
+void SelectTerminalsForm::on_toolButtonSelectRegion_clicked()
+{
+    AddTerminalsDialog *addTerm = new AddTerminalsDialog(modTerminals, REGIONS_SELECTED,this);
+    addTerm->move(this->parentWidget()->geometry().center().x() - addTerm->geometry().center().x(),
+                  this->parentWidget()->geometry().center().y() - addTerm->geometry().center().y());
+    if(addTerm->exec() == QDialog::Accepted){
+        fillingTerminals(addTerm->getSelectedTerminals());
+    }
+
+    addTerm->deleteLater();
+}
+
 
 void SelectTerminalsForm::fillingTerminals(QList<QModelIndex> listIdx)
 {
@@ -78,5 +102,56 @@ void SelectTerminalsForm::fillingTerminals(QList<QModelIndex> listIdx)
         ui->tableWidgetTerm->horizontalHeader()->setStretchLastSection(true);
         ui->tableWidgetTerm->verticalHeader()->setDefaultSectionSize(ui->tableWidgetTerm->verticalHeader()->minimumSectionSize());
         row++;
+    }
+}
+
+void SelectTerminalsForm::on_pushButtonSelectAll_clicked()
+{
+    const int rowCount = ui->tableWidgetTerm->rowCount();
+    for(int i = 0; i < rowCount; ++i){
+        QWidget *item = ui->tableWidgetTerm->cellWidget(i,0);
+        QCheckBox *checkBox = qobject_cast<QCheckBox*>(item->layout()->itemAt(0)->widget());
+        checkBox->setChecked(true);
+    }
+}
+
+void SelectTerminalsForm::on_pushButtonDeSelectAll_clicked()
+{
+    const int rowCount = ui->tableWidgetTerm->rowCount();
+    for(int i = 0; i < rowCount; ++i){
+        QWidget *item = ui->tableWidgetTerm->cellWidget(i,0);
+        QCheckBox *checkBox = qobject_cast<QCheckBox*>(item->layout()->itemAt(0)->widget());
+        checkBox->setChecked(false);
+    }
+}
+
+void SelectTerminalsForm::on_pushButtonDeleteSelected_clicked()
+{
+    int rowCount = ui->tableWidgetTerm->rowCount();
+    int uncheckCount=0;                 //Колличество не выбранных строк
+    for(int i =0; i<rowCount; i++){
+        QWidget *item = ui->tableWidgetTerm->cellWidget(i,0);
+        QCheckBox *checkBox = qobject_cast<QCheckBox*>(item->layout()->itemAt(0)->widget());
+        if(!checkBox->isChecked()){
+            uncheckCount++;
+        }
+    }
+    int currentRow = 0;
+    //Перебираем строки таблицы и если CheckBox выбран удалянм строку
+    //если не выбран переходим на следующую строку
+    while(rowCount != uncheckCount){
+        QWidget *item = ui->tableWidgetTerm->cellWidget(currentRow,0);
+        QCheckBox *checkBox = qobject_cast<QCheckBox*>(item->layout()->itemAt(0)->widget());
+        if(checkBox->isChecked()){
+            ui->tableWidgetTerm->removeRow(currentRow);
+            rowCount = ui->tableWidgetTerm->rowCount();
+        } else {
+            currentRow++;
+        }
+    }
+    if(rowCount == 0){
+        ui->pushButtonSelectAll->setEnabled(false);
+        ui->pushButtonDeSelectAll->setEnabled(false);
+        ui->pushButtonDeleteSelected->setEnabled(false);
     }
 }
