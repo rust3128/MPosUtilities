@@ -19,6 +19,7 @@ public:
 private slots:
     void createModels();
     void on_actionFuelName_triggered();
+    void on_actionRunSql_triggered();
 
 private:
 

@@ -15,21 +15,16 @@ class SelectTerminalsForm : public QWidget
 public:
     explicit SelectTerminalsForm(QWidget *parent = nullptr);
     ~SelectTerminalsForm();
-
+    QList<int> selectedTerminals();
 public slots:
     void slotGetModel(QSqlQueryModel* mod);
 private slots:
     void on_toolButtonSelectTerminal_clicked();
     void on_toolButtonSelectTermRegions_clicked();
-
     void on_toolButtonSelectRegion_clicked();
-
     void on_pushButtonSelectAll_clicked();
-
     void on_pushButtonDeSelectAll_clicked();
-
     void on_pushButtonDeleteSelected_clicked();
-
 private:
     void createUI();
     void fillingTerminals(QList<QModelIndex> listIdx);

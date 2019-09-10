@@ -89,8 +89,11 @@ SOURCES += \
         DataBases/options.cpp \
         FuelNameDialog/fuelnamedialog.cpp \
         LoggingCategories/loggingcategories.cpp \
+        RunSqlDialog/runsqldialog.cpp \
+        SQLHighlighter/SQLHighlighter.cpp \
         SelectTerminalsForm/addterminalsdialog.cpp \
         SelectTerminalsForm/selectterminalsform.cpp \
+        ViewProgressForm/viewprogressform.cpp \
         main.cpp \
         mainwindow.cpp
 
@@ -101,16 +104,21 @@ HEADERS += \
         DataBases/options.h \
         FuelNameDialog/fuelnamedialog.h \
         LoggingCategories/loggingcategories.h \
+        RunSqlDialog/runsqldialog.h \
+        SQLHighlighter/SQLHighlighter.h \
         SelectTerminalsForm/addterminalsdialog.h \
         SelectTerminalsForm/selectedlist.h \
         SelectTerminalsForm/selectterminalsform.h \
+        ViewProgressForm/viewprogressform.h \
         mainwindow.h
 
 FORMS += \
         ConnectionSettingDialog/connectionsettingdialog.ui \
         FuelNameDialog/fuelnamedialog.ui \
+        RunSqlDialog/runsqldialog.ui \
         SelectTerminalsForm/addterminalsdialog.ui \
         SelectTerminalsForm/selectterminalsform.ui \
+        ViewProgressForm/viewprogressform.ui \
         mainwindow.ui
 
 # Default rules for deployment.

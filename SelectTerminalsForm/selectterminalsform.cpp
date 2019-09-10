@@ -155,3 +155,17 @@ void SelectTerminalsForm::on_pushButtonDeleteSelected_clicked()
         ui->pushButtonDeleteSelected->setEnabled(false);
     }
 }
+
+QList<int> SelectTerminalsForm::selectedTerminals()
+{
+    QList<int> terminals;
+    int rowCount = ui->tableWidgetTerm->rowCount();
+    for(int i=0; i<rowCount; i++){
+        QWidget *item = ui->tableWidgetTerm->cellWidget(i,0);
+        QCheckBox *checkBox = qobject_cast<QCheckBox*>(item->layout()->itemAt(0)->widget());
+        if(checkBox->isChecked()){
+           terminals.append(ui->tableWidgetTerm->item(i,1)->data(Qt::DisplayRole).toInt());
+        }
+    }
+    return terminals;
+}

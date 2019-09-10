@@ -28,6 +28,7 @@
      <string>Утилиты</string>
     </property>
     <addaction name="actionFuelName"/>
+    <addaction name="actionRunSql"/>
    </widget>
    <addaction name="menuUtils"/>
   </widget>
@@ -45,6 +46,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionFuelName"/>
+   <addaction name="actionRunSql"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionFuelName">
@@ -54,6 +56,15 @@
    </property>
    <property name="text">
     <string>Наименования топлива</string>
+   </property>
+  </action>
+  <action name="actionRunSql">
+   <property name="icon">
+    <iconset resource="resourses.qrc">
+     <normaloff>:/Images/runsql.png</normaloff>:/Images/runsql.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выполнить скрипт</string>
    </property>
   </action>
  </widget>

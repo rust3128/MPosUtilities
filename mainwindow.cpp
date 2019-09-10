@@ -3,6 +3,7 @@
 #include "LoggingCategories/loggingcategories.h"
 #include "SelectTerminalsForm/selectterminalsform.h"
 #include "FuelNameDialog/fuelnamedialog.h"
+#include "RunSqlDialog/runsqldialog.h"
 
 #include <QDateTime>
 #include <QTimer>
@@ -22,7 +23,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    Q_UNUSED(event);
+    Q_UNUSED(event)
     qInfo(logInfo()) << "Закрыте главного окна программы.";
 }
 void MainWindow::createModels()
@@ -46,11 +47,17 @@ void MainWindow::createModels()
 //                             "ORDER BY t.TERMINAL_ID");
     modelTerminals->setHeaderData(0, Qt::Horizontal,"АЗС");
     modelTerminals->setHeaderData(1, Qt::Horizontal,"Название терминала");
-    qDebug(logDebug()) << "Greate Model finished" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");;
+    qDebug(logDebug()) << "Greate Model finished" << QDateTime::currentDateTime().toString("hh:mm:ss.zzz");
 }
 
 void MainWindow::on_actionFuelName_triggered()
 {
     FuelNameDialog *fnDiag = new FuelNameDialog(modelTerminals);
     fnDiag->exec();
+}
+
+void MainWindow::on_actionRunSql_triggered()
+{
+    RunSqlDialog *runSql = new RunSqlDialog(modelTerminals);
+    runSql->exec();
 }
