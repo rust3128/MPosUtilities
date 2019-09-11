@@ -87,6 +87,7 @@ SOURCES += \
         DataBases/databases.cpp \
         DataBases/databasesettings.cpp \
         DataBases/options.cpp \
+        ExecuteSqlClass/executesqlclass.cpp \
         FuelNameDialog/fuelnamedialog.cpp \
         LoggingCategories/loggingcategories.cpp \
         RunSqlDialog/runsqldialog.cpp \
@@ -102,6 +103,8 @@ HEADERS += \
         DataBases/databases.h \
         DataBases/databasesettings.h \
         DataBases/options.h \
+        ExecuteSqlClass/executesqlclass.h \
+        ExecuteSqlClass/statusthread.h \
         FuelNameDialog/fuelnamedialog.h \
         LoggingCategories/loggingcategories.h \
         RunSqlDialog/runsqldialog.h \

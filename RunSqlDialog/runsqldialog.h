@@ -20,9 +20,12 @@ public:
 
 signals:
     void signalSendModel(QSqlQueryModel*);
+    void signalSendTerminals(QList<int>*);
+    void signalSendSQL(QStringList);
+    void signalRunSQL();
 private slots:
     void on_pushButtonRun_clicked();
-    void on_textEditSql_textChanged();
+    void on_plainTextEditSql_textChanged();
 
 private:
     void getConnectionsList();                 //Получения дагнных о подключении к базам данных АЗС
@@ -30,7 +33,6 @@ private:
     Ui::RunSqlDialog *ui;
     QSqlQueryModel *m_model;
     QList<int> m_terminals;
-    QList<QStringList> m_connectionsList;     //Cписок данных для подключения к базе данных АЗС
 };
 
 #endif // RUNSQLDIALOG_H

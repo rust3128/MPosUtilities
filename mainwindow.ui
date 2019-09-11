@@ -30,7 +30,14 @@
     <addaction name="actionFuelName"/>
     <addaction name="actionRunSql"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <addaction name="actionConnection"/>
+   </widget>
    <addaction name="menuUtils"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="iconSize">
@@ -65,6 +72,11 @@
    </property>
    <property name="text">
     <string>Выполнить скрипт</string>
+   </property>
+  </action>
+  <action name="actionConnection">
+   <property name="text">
+    <string>Подключния к АЗС</string>
    </property>
   </action>
  </widget>

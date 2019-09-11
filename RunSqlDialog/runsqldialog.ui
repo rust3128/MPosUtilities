@@ -38,7 +38,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QTextEdit" name="textEditSql"/>
+       <widget class="QPlainTextEdit" name="plainTextEditSql"/>
       </item>
      </layout>
     </widget>
@@ -46,7 +46,7 @@
    <item row="0" column="2">
     <widget class="ViewProgressForm" name="widgetProgress" native="true"/>
    </item>
-   <item row="1" column="1" colspan="2">
+   <item row="1" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">

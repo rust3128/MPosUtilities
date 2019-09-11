@@ -9,5 +9,10 @@
         <file>Images/selectTerminal.png</file>
         <file>Images/fuellogo.png</file>
         <file>Images/runsql.png</file>
+        <file>Images/azs.png</file>
+        <file>Images/database.png</file>
+        <file>Images/selectfuel.png</file>
+        <file>Images/error.png</file>
+        <file>Images/Accept.png</file>
     </qresource>
 </RCC>
