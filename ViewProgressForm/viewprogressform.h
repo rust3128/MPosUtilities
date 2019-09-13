@@ -33,7 +33,10 @@ private:
     QStringList m_listSQL;
     QList<QStringList> m_connectionsList;     //Cписок данных для подключения к базе данных АЗС
     int colError;                             //Количество неудачных попыток
-//    QStringList statusText;                   //Список описанияй статуса подключений
+
+    // QWidget interface
+protected:
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // VIEWPROGRESSFORM_H

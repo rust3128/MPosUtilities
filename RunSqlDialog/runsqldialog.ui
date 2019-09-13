@@ -13,40 +13,108 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
    <item row="0" column="0">
-    <widget class="SelectTerminalsForm" name="widget" native="true"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QGroupBox" name="groupBox">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0">
-       <widget class="QPushButton" name="pushButtonRun">
-        <property name="text">
-         <string>Выполнить</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../resourses.qrc">
-          <normaloff>:/Images/runsql.png</normaloff>:/Images/runsql.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>32</width>
-          <height>32</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPlainTextEdit" name="plainTextEditSql"/>
-      </item>
-     </layout>
+    <widget class="QSplitter" name="splitter">
+     <property name="styleSheet">
+      <string notr="true">QSplitter::handle {
+background :qlineargradient(spread:pad, x1:0.993909, y1:0.455, x2:0, y2:0.511, stop:0 rgba(172, 172, 172, 255), stop:1 rgba(255, 255, 255, 255));
+width: 5px;
+height: 5px;
+
+border-radius: 2px;
+}
+QSplitterHandle::hover{}
+QSplitter::handle:horizontal:hover {background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(102, 102, 102, 255), stop:1 rgba(255, 255, 255, 255));}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="handleWidth">
+      <number>4</number>
+     </property>
+     <property name="childrenCollapsible">
+      <bool>false</bool>
+     </property>
+     <widget class="SelectTerminalsForm" name="widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButtonClear">
+         <property name="text">
+          <string>Очистить</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resourses.qrc">
+           <normaloff>:/Images/clear.png</normaloff>:/Images/clear.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButtonOpen">
+         <property name="text">
+          <string>Загрузить</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resourses.qrc">
+           <normaloff>:/Images/fileopen.png</normaloff>:/Images/fileopen.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="pushButtonRun">
+         <property name="text">
+          <string>Выполнить</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resourses.qrc">
+           <normaloff>:/Images/runsql.png</normaloff>:/Images/runsql.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QPlainTextEdit" name="plainTextEditSql"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="ViewProgressForm" name="widgetProgress" native="true"/>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="ViewProgressForm" name="widgetProgress" native="true"/>
-   </item>
-   <item row="1" column="0" colspan="2">
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <spacer name="horizontalSpacer">

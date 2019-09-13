@@ -38,8 +38,8 @@ void SelectTerminalsForm::slotGetModel(QSqlQueryModel *mod)
 void SelectTerminalsForm::on_toolButtonSelectTerminal_clicked()
 {
     AddTerminalsDialog *addTerm = new AddTerminalsDialog(modTerminals, TERMINAL_SELECTED,this);
-    addTerm->move(this->parentWidget()->geometry().center().x() - addTerm->geometry().center().x(),
-                  this->parentWidget()->geometry().center().y() - addTerm->geometry().center().y());
+//    addTerm->move(this->geometry().center().x() - addTerm->geometry().center().x(),
+//                  this->geometry().center().y() - addTerm->geometry().center().y());
     if(addTerm->exec() == QDialog::Accepted){
         fillingTerminals(addTerm->getSelectedTerminals());
     }
@@ -50,8 +50,6 @@ void SelectTerminalsForm::on_toolButtonSelectTerminal_clicked()
 void SelectTerminalsForm::on_toolButtonSelectTermRegions_clicked()
 {
     AddTerminalsDialog *addTerm = new AddTerminalsDialog(modTerminals, TERMINALS_REGION_SELECTED,this);
-    addTerm->move(this->parentWidget()->geometry().center().x() - addTerm->geometry().center().x(),
-                  this->parentWidget()->geometry().center().y() - addTerm->geometry().center().y());
     if(addTerm->exec() == QDialog::Accepted){
         fillingTerminals(addTerm->getSelectedTerminals());
     }
@@ -62,8 +60,7 @@ void SelectTerminalsForm::on_toolButtonSelectTermRegions_clicked()
 void SelectTerminalsForm::on_toolButtonSelectRegion_clicked()
 {
     AddTerminalsDialog *addTerm = new AddTerminalsDialog(modTerminals, REGIONS_SELECTED,this);
-    addTerm->move(this->parentWidget()->geometry().center().x() - addTerm->geometry().center().x(),
-                  this->parentWidget()->geometry().center().y() - addTerm->geometry().center().y());
+
     if(addTerm->exec() == QDialog::Accepted){
         fillingTerminals(addTerm->getSelectedTerminals());
     }

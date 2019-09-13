@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MPos Инструментарий</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -27,17 +27,20 @@
     <property name="title">
      <string>Утилиты</string>
     </property>
-    <addaction name="actionFuelName"/>
+    <widget class="QMenu" name="menuName">
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="title">
+      <string>Наименования топлива</string>
+     </property>
+     <addaction name="actionFuelName"/>
+     <addaction name="actionShowFuelName"/>
+    </widget>
+    <addaction name="menuName"/>
     <addaction name="actionRunSql"/>
    </widget>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>Настройки</string>
-    </property>
-    <addaction name="actionConnection"/>
-   </widget>
    <addaction name="menuUtils"/>
-   <addaction name="menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="iconSize">
@@ -59,10 +62,13 @@
   <action name="actionFuelName">
    <property name="icon">
     <iconset resource="resourses.qrc">
-     <normaloff>:/Images/splash.png</normaloff>:/Images/splash.png</iconset>
+     <normaloff>:/Images/view.png</normaloff>:/Images/view.png</iconset>
    </property>
    <property name="text">
-    <string>Наименования топлива</string>
+    <string>Просмотр наименований</string>
+   </property>
+   <property name="statusTip">
+    <string>Просмотр наименований топлива на АЗС</string>
    </property>
   </action>
   <action name="actionRunSql">
@@ -74,9 +80,9 @@
     <string>Выполнить скрипт</string>
    </property>
   </action>
-  <action name="actionConnection">
+  <action name="actionShowFuelName">
    <property name="text">
-    <string>Подключния к АЗС</string>
+    <string>Справочник наименований</string>
    </property>
   </action>
  </widget>

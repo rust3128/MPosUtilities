@@ -14,5 +14,9 @@
         <file>Images/selectfuel.png</file>
         <file>Images/error.png</file>
         <file>Images/Accept.png</file>
+        <file>Images/fileopen.png</file>
+        <file>Images/clear.png</file>
+        <file>Images/view.png</file>
+        <file>Images/Excel.png</file>
     </qresource>
 </RCC>

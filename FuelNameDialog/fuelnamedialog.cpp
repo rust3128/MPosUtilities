@@ -9,8 +9,9 @@ FuelNameDialog::FuelNameDialog(QSqlQueryModel *mod, QWidget *parent) :
 
 {
     ui->setupUi(this);
-    connect(this,&FuelNameDialog::signalSendModel,ui->widget,&SelectTerminalsForm::slotGetModel);
+    connect(this,&FuelNameDialog::signalSendModel,ui->widgetSelectTerminals,&SelectTerminalsForm::slotGetModel);
     emit signalSendModel(modelTerms);
+    ui->widgetProgress->hide();
 
 }
 

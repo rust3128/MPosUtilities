@@ -27,6 +27,12 @@ private slots:
     void on_pushButtonRun_clicked();
     void on_plainTextEditSql_textChanged();
 
+    void on_pushButtonOpen_clicked();
+
+    void on_pushButtonClear_clicked();
+
+    void on_pushButtonClose_clicked();
+
 private:
     void getConnectionsList();                 //Получения дагнных о подключении к базам данных АЗС
 private:

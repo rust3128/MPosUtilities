@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QSqlQueryModel>
+#include <QMdiArea>
 
 namespace Ui {
 class MainWindow;
@@ -26,7 +27,7 @@ private:
 private:
     Ui::MainWindow *ui;
     QSqlQueryModel *modelTerminals;
-
+    QMdiArea *mdiArea;
     // QWidget interface
 protected:
     void closeEvent(QCloseEvent *event);

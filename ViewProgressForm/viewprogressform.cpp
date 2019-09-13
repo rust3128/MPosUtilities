@@ -37,7 +37,7 @@ ViewProgressForm::ViewProgressForm(QWidget *parent) :
     ui->tableWidget->verticalHeader()->hide();
     ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "АЗС" << "Статус");
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
-    ui->tableWidget->verticalHeader()->setDefaultSectionSize(36);
+//    ui->tableWidget->verticalHeader()->setDefaultSectionSize(36);
 }
 
 ViewProgressForm::~ViewProgressForm()
@@ -116,7 +116,7 @@ void ViewProgressForm::slotGetStatusThread(statusThread status)
                 colError++;
                break;
             case ERROR_EXECUTE_SQL:
-                ui->tableWidget->item(i,1)->setBackground(QBrush("#DF01A5"));
+                ui->tableWidget->item(i,1)->setBackground(QBrush("#FE2E2E"));
                 ui->tableWidget->item(i,1)->setIcon(QIcon(":/Images/error.png"));
                 ui->progressBarGetFuel->setValue(ui->progressBarGetFuel->value()+1);
                 colError++;
@@ -132,6 +132,8 @@ void ViewProgressForm::slotGetStatusThread(statusThread status)
             break;
         }
     }
+    ui->tableWidget->resizeRowsToContents();
+
     ui->progressBarGetFuel->setFormat("Обработано %v из %m. Ошибок "+QString::number(colError));
 }
 
@@ -154,3 +156,8 @@ void ViewProgressForm::getConnectionsList()
     }
 }
 
+void ViewProgressForm::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+    ui->tableWidget->resizeRowsToContents();
+}

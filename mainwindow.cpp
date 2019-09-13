@@ -7,12 +7,20 @@
 
 #include <QDateTime>
 #include <QTimer>
+#include <QMdiSubWindow>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    mdiArea = new QMdiArea(this);  // инициализируем QMdiArea
+    // Настраиваем скроллбары
+    mdiArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    mdiArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    // Устанавливаем Mdi Area в качестве центрального виджета
+    setCentralWidget(mdiArea);
     createModels();
 }
 
@@ -52,12 +60,35 @@ void MainWindow::createModels()
 
 void MainWindow::on_actionFuelName_triggered()
 {
-    FuelNameDialog *fnDiag = new FuelNameDialog(modelTerminals);
-    fnDiag->exec();
+    FuelNameDialog *fnDiag = new FuelNameDialog(modelTerminals,this);
+    fnDiag->setWindowTitle("Просмотр наименований топлива");
+    if(mdiArea->subWindowList().size()>0){
+        for(int i=0; i<mdiArea->subWindowList().size();++i) {
+            if(mdiArea->subWindowList().at(i)->windowTitle() == fnDiag->windowTitle()) {
+                mdiArea->setActiveSubWindow(mdiArea->subWindowList().at(i));
+                return;
+            }
+        }
+    }
+    mdiArea->addSubWindow(fnDiag);
+    mdiArea->cascadeSubWindows();
+    fnDiag->show();
 }
 
 void MainWindow::on_actionRunSql_triggered()
 {
-    RunSqlDialog *runSql = new RunSqlDialog(modelTerminals);
-    runSql->exec();
+    RunSqlDialog *runSql = new RunSqlDialog(modelTerminals,this);
+    runSql->setWindowTitle("Выполнить скрипт на АЗС");
+
+    if(mdiArea->subWindowList().size()>0){
+        for(int i=0; i<mdiArea->subWindowList().size();++i) {
+            if(mdiArea->subWindowList().at(i)->windowTitle() == runSql->windowTitle()) {
+                mdiArea->setActiveSubWindow(mdiArea->subWindowList().at(i));
+                return;
+            }
+        }
+    }
+    mdiArea->addSubWindow(runSql);
+    mdiArea->cascadeSubWindows();
+    runSql->show();
 }

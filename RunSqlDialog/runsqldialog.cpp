@@ -3,6 +3,7 @@
 #include "LoggingCategories/loggingcategories.h"
 #include "SQLHighlighter/SQLHighlighter.h"
 #include <QMessageBox>
+#include <QFileDialog>
 
 
 RunSqlDialog::RunSqlDialog(QSqlQueryModel *mod, QWidget *parent) :
@@ -52,5 +53,39 @@ void RunSqlDialog::on_pushButtonRun_clicked()
 
 void RunSqlDialog::on_plainTextEditSql_textChanged()
 {
-        ui->pushButtonRun->setDisabled(ui->plainTextEditSql->toPlainText().isEmpty());
+    ui->pushButtonRun->setDisabled(ui->plainTextEditSql->toPlainText().isEmpty());
+    ui->pushButtonClear->setDisabled(ui->plainTextEditSql->toPlainText().isEmpty());
+
+}
+
+void RunSqlDialog::on_pushButtonOpen_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,"Открыть файл скрипта",".", "SQL файлы (*.sql);; Все файлы (*.*)");
+    if(!fileName.isEmpty()){
+        QFile file(fileName);
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Ошибка",
+                                 QString("Не могу прочитать файл скрипта %1:\n%2.")
+                                 .arg(QDir::toNativeSeparators(fileName), file.errorString()));
+            return;
+        }
+        QTextStream in(&file);
+#ifndef QT_NO_CURSOR
+        QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+        ui->plainTextEditSql->setPlainText(in.readAll());
+#ifndef QT_NO_CURSOR
+        QGuiApplication::restoreOverrideCursor();
+#endif
+    }
+}
+
+void RunSqlDialog::on_pushButtonClear_clicked()
+{
+    ui->plainTextEditSql->clear();
+}
+
+void RunSqlDialog::on_pushButtonClose_clicked()
+{
+    this->reject();
 }
