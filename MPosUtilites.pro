@@ -83,6 +83,8 @@ scriptsql.files = $$files($$PWD/SQL/*.sql)
 CONFIG += c++11
 
 SOURCES += \
+        AzsFuelName/azsfuelname.cpp \
+        AzsFuelName/fuelname.cpp \
         ConnectionSettingDialog/connectionsettingdialog.cpp \
         DataBases/databases.cpp \
         DataBases/databasesettings.cpp \
@@ -99,6 +101,8 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
+        AzsFuelName/azsfuelname.h \
+        AzsFuelName/fuelname.h \
         ConnectionSettingDialog/connectionsettingdialog.h \
         DataBases/databases.h \
         DataBases/databasesettings.h \

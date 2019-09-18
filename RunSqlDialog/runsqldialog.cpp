@@ -45,7 +45,7 @@ void RunSqlDialog::on_pushButtonRun_clicked()
     listSQL.removeAll({});
     emit signalSendSQL(listSQL);
     emit signalSendTerminals(&m_terminals);
-    emit signalRunSQL();
+    emit signalRunSQL(SIMPLE_SQL);
     ui->widget->hide();
     ui->widgetProgress->show();
     ui->groupBox->setEnabled(false);

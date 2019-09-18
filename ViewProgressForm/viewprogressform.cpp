@@ -16,6 +16,17 @@ static QString passConv(QString str)
     return "masterkey";
 };
 
+static bool compare(const AzsFuelName& first, const AzsFuelName& second)
+{
+    if (first.terminalID() < second.terminalID())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 ViewProgressForm::ViewProgressForm(QWidget *parent) :
     QWidget(parent),
@@ -23,15 +34,6 @@ ViewProgressForm::ViewProgressForm(QWidget *parent) :
 
 {
     ui->setupUi(this);
-
-    //Описания статосов выполнения запроса
-//    statusText.insert(CONNECT_TO_DATABASE,"Подключение к базе данных АЗС...");
-//    statusText.insert(SELECT_FUEL_NAME,"Получение списка видов топлива....");
-//    statusText.insert(ERROR_OPEN_DATABASE,"Ошибка открытия базы данных АЗС!");
-//    statusText.insert(EXECUTE_SQL, "Обновление наименования топлива...");
-//    statusText.insert(ERROR_GET_FUEL_NAME, "Ошибка получения списка наименований топлива!");
-//    statusText.insert(ERROR_EXECUTE_SQL,"Ошибка выполнения запроса");
-//    statusText.insert(FINISHED,"Готово!");
 
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->verticalHeader()->hide();
@@ -56,20 +58,21 @@ void ViewProgressForm::slotGetListSQL(QStringList sql)
     qDebug(logDebug()) << "SQL" << m_listSQL;
 }
 
-void ViewProgressForm::slotRunSQL()
+void ViewProgressForm::slotRunSQL(int type)
 {
+    m_typeSQL = type;
     getConnectionsList();
 
     //Количетсво обрабатываемх АЗС
     int _azsCount = m_connectionsList.size();
-    colError=0;
+    m_colError=0;
     ui->progressBarGetFuel->setRange(0, _azsCount);
     ui->progressBarGetFuel->setValue(0);
-    ui->progressBarGetFuel->setFormat("Обработано %v из %m. Ошибок "+QString::number(colError));
+    ui->progressBarGetFuel->setFormat("Обработано %v из %m. Ошибок "+QString::number(m_colError));
 
     for(int i=0; i<_azsCount; i++){
         //Создаем объект класса получения наиметований и потока
-        ExecuteSqlClass *execSQL = new ExecuteSqlClass(m_connectionsList.at(i),m_listSQL);
+        ExecuteSqlClass *execSQL = new ExecuteSqlClass(m_connectionsList.at(i),m_listSQL, m_typeSQL);
         QThread *thread = new QThread();
         //помещаем класс в поток.
         execSQL->moveToThread(thread);
@@ -113,13 +116,13 @@ void ViewProgressForm::slotGetStatusThread(statusThread status)
                 ui->tableWidget->item(i,1)->setBackground(QBrush("#FE2E2E"));
                 ui->tableWidget->item(i,1)->setIcon(QIcon(":/Images/error.png"));
                 ui->progressBarGetFuel->setValue(ui->progressBarGetFuel->value()+1);
-                colError++;
+                m_colError++;
                break;
             case ERROR_EXECUTE_SQL:
                 ui->tableWidget->item(i,1)->setBackground(QBrush("#FE2E2E"));
                 ui->tableWidget->item(i,1)->setIcon(QIcon(":/Images/error.png"));
                 ui->progressBarGetFuel->setValue(ui->progressBarGetFuel->value()+1);
-                colError++;
+                m_colError++;
                break;
             case FINISHED:
                 ui->tableWidget->item(i,1)->setBackground(QBrush("#BFFF00"));
@@ -134,7 +137,21 @@ void ViewProgressForm::slotGetStatusThread(statusThread status)
     }
     ui->tableWidget->resizeRowsToContents();
 
-    ui->progressBarGetFuel->setFormat("Обработано %v из %m. Ошибок "+QString::number(colError));
+    ui->progressBarGetFuel->setFormat("Обработано %v из %m. Ошибок "+QString::number(m_colError));
+    if(ui->progressBarGetFuel->value() == m_connectionsList.size()){
+        switch (m_typeSQL) {
+        case EXECUTE_SQL:
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void ViewProgressForm::slotGetAzsFuelName(AzsFuelName azsFuelname)
+{
+    //Добавляем полученный список наименований
+    m_listFuelName.append(azsFuelname);
 }
 
 void ViewProgressForm::getConnectionsList()

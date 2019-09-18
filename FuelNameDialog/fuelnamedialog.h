@@ -1,6 +1,7 @@
 #ifndef FUELNAMEDIALOG_H
 #define FUELNAMEDIALOG_H
 
+#include "ExecuteSqlClass/statusthread.h"
 #include <QDialog>
 #include <QSqlQueryModel>
 
@@ -17,11 +18,21 @@ public:
     ~FuelNameDialog();
 signals:
     void signalSendModel(QSqlQueryModel*);
-private slots:
+    void signalSendTerminals(QList<int>*);
+    void signalSendSQL(QStringList);
+    void signalRunSQL(int);
 
+private slots:
+    void on_pushButtonView_clicked();
+
+    void on_pushButtonExcel_clicked();
+
+private:
+    void showFuelName(int typeView);
 private:
     Ui::FuelNameDialog *ui;
     QSqlQueryModel *modelTerms;
+    QList<int> m_terminals;
 
 };
 

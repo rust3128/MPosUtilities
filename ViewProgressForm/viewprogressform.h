@@ -1,7 +1,7 @@
 #ifndef VIEWPROGRESSFORM_H
 #define VIEWPROGRESSFORM_H
 
-#include "ExecuteSqlClass/statusthread.h"
+
 #include "LoggingCategories/loggingcategories.h"
 #include "ExecuteSqlClass/executesqlclass.h"
 #include <QThread>
@@ -23,8 +23,9 @@ public:
 public slots:
     void slotGetTerminalsList(QList<int> *list);
     void slotGetListSQL(QStringList sql);
-    void slotRunSQL();
+    void slotRunSQL(int type);
     void slotGetStatusThread(statusThread status);      //Обработка статуса выполнения запроса
+    void slotGetAzsFuelName(AzsFuelName azsFuelname);   //Получение списка наименований по терминалу
 private:
     void getConnectionsList();
 private:
@@ -32,7 +33,9 @@ private:
     QList<int> *m_listTerm;
     QStringList m_listSQL;
     QList<QStringList> m_connectionsList;     //Cписок данных для подключения к базе данных АЗС
-    int colError;                             //Количество неудачных попыток
+    QList<AzsFuelName> m_listFuelName;        //Список наименований топлива
+    int m_colError;                             //Количество неудачных попыток
+    int m_typeSQL;
 
     // QWidget interface
 protected:
