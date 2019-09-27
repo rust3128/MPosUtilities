@@ -1,6 +1,7 @@
 #include "fuelnamedialog.h"
 #include "ui_fuelnamedialog.h"
 #include "LoggingCategories/loggingcategories.h"
+
 #include <QMessageBox>
 
 FuelNameDialog::FuelNameDialog(QSqlQueryModel *mod, QWidget *parent) :
@@ -16,6 +17,10 @@ FuelNameDialog::FuelNameDialog(QSqlQueryModel *mod, QWidget *parent) :
     connect(this,&FuelNameDialog::signalRunSQL,ui->widgetProgress,&ViewProgressForm::slotRunSQL);
     emit signalSendModel(modelTerms);
     ui->widgetProgress->hide();
+//    ui->splitter->setStretchFactor(0,0);
+//    ui->splitter->setStretchFactor(1,0);
+//    ui->splitter->setStretchFactor(2,1);
+    ui->radioButtonActiv->setChecked(true);
 
 }
 
@@ -33,22 +38,22 @@ void FuelNameDialog::showFuelName(int typeView)
         return;
     }
     QStringList listSQL;
-    listSQL << "select t.TANK_ID, f.FUEL_ID, f.SHORTNAME, f.NAME from FUELS f LEFT JOIN tanks t ON t.FUEL_ID = f.FUEL_ID where f.ISACTIVE='T' order by t.TANK_ID";
+    if(ui->radioButtonActiv->isChecked())
+        listSQL << "select t.TANK_ID, f.FUEL_ID, f.SHORTNAME, f.NAME from FUELS f LEFT JOIN tanks t ON t.FUEL_ID = f.FUEL_ID where f.ISACTIVE='T' order by t.TANK_ID";
+    else
+        listSQL << "select t.TANK_ID, f.FUEL_ID, f.SHORTNAME, f.NAME from FUELS f LEFT JOIN tanks t ON t.FUEL_ID = f.FUEL_ID order by t.TANK_ID";
 
     emit signalSendSQL(listSQL);
     emit signalSendTerminals(&m_terminals);
     emit signalRunSQL(typeView);
-    ui->widget->hide();
+    ui->widgetSelectTerminals->hide();
     ui->widgetProgress->show();
+    ui->pushButtonView->hide();
+    ui->frameSelect->setDisabled(true);
 
 }
 
 void FuelNameDialog::on_pushButtonView_clicked()
 {
     showFuelName(SHOW_FUEL_NAME);
-}
-
-void FuelNameDialog::on_pushButtonExcel_clicked()
-{
-    showFuelName(EXPORT_FUEL_NAME);
 }

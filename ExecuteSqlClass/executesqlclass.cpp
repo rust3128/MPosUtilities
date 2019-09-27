@@ -24,6 +24,7 @@ void ExecuteSqlClass::executeSQL()
     //Устанавливаем текущий статус выполнения
     m_currStatus.terminalId=m_connList[0].toInt();
     m_currStatus.currentStatus=CONNECT_TO_DATABASE;
+    m_currStatus.statusText="Подключение к базе данных АЗС...";
     emit signalSendStatus(m_currStatus);
     //Cоздаем подключение к базе данных АЗС
     QSqlDatabase db = QSqlDatabase::addDatabase("QIBASE", m_connList[0]);

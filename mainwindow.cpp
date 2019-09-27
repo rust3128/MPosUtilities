@@ -4,6 +4,7 @@
 #include "SelectTerminalsForm/selectterminalsform.h"
 #include "FuelNameDialog/fuelnamedialog.h"
 #include "RunSqlDialog/runsqldialog.h"
+#include "ChangeFuelNameDialog/changefuelnamedialog.h"
 
 #include <QDateTime>
 #include <QTimer>
@@ -91,4 +92,20 @@ void MainWindow::on_actionRunSql_triggered()
     mdiArea->addSubWindow(runSql);
     mdiArea->cascadeSubWindows();
     runSql->show();
+}
+
+void MainWindow::on_actionChangeFuel_triggered()
+{
+    ChangeFuelNameDialog *chDiag = new ChangeFuelNameDialog(modelTerminals,this);
+    if(mdiArea->subWindowList().size()>0){
+        for(int i=0; i<mdiArea->subWindowList().size();++i) {
+            if(mdiArea->subWindowList().at(i)->windowTitle() == chDiag->windowTitle()) {
+                mdiArea->setActiveSubWindow(mdiArea->subWindowList().at(i));
+                return;
+            }
+        }
+    }
+    mdiArea->addSubWindow(chDiag);
+    mdiArea->cascadeSubWindows();
+    chDiag->show();
 }

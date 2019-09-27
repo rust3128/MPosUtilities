@@ -28,6 +28,7 @@ public slots:
     void slotGetAzsFuelName(AzsFuelName azsFuelname);   //Получение списка наименований по терминалу
 private:
     void getConnectionsList();
+    void showFuelName();
 private:
     Ui::ViewProgressForm *ui;
     QList<int> *m_listTerm;

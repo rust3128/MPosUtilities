@@ -22,6 +22,8 @@ private slots:
     void on_actionFuelName_triggered();
     void on_actionRunSql_triggered();
 
+    void on_actionChangeFuel_triggered();
+
 private:
 
 private:

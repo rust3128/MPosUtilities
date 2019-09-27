@@ -18,5 +18,11 @@
         <file>Images/clear.png</file>
         <file>Images/view.png</file>
         <file>Images/Excel.png</file>
+        <file>Images/radio_button_unchecked.png</file>
+        <file>Images/radio_button_checked.png</file>
+        <file>Images/changefuelname.png</file>
+        <file>Images/RUN.png</file>
+        <file>Images/winter.png</file>
+        <file>Images/summer.png</file>
     </qresource>
 </RCC>

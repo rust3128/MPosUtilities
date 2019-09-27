@@ -85,12 +85,14 @@ CONFIG += c++11
 SOURCES += \
         AzsFuelName/azsfuelname.cpp \
         AzsFuelName/fuelname.cpp \
+        ChangeFuelNameDialog/changefuelnamedialog.cpp \
         ConnectionSettingDialog/connectionsettingdialog.cpp \
         DataBases/databases.cpp \
         DataBases/databasesettings.cpp \
         DataBases/options.cpp \
         ExecuteSqlClass/executesqlclass.cpp \
         FuelNameDialog/fuelnamedialog.cpp \
+        FuelNameDialog/viewfuelnamedialog.cpp \
         LoggingCategories/loggingcategories.cpp \
         RunSqlDialog/runsqldialog.cpp \
         SQLHighlighter/SQLHighlighter.cpp \
@@ -103,6 +105,7 @@ SOURCES += \
 HEADERS += \
         AzsFuelName/azsfuelname.h \
         AzsFuelName/fuelname.h \
+        ChangeFuelNameDialog/changefuelnamedialog.h \
         ConnectionSettingDialog/connectionsettingdialog.h \
         DataBases/databases.h \
         DataBases/databasesettings.h \
@@ -110,6 +113,7 @@ HEADERS += \
         ExecuteSqlClass/executesqlclass.h \
         ExecuteSqlClass/statusthread.h \
         FuelNameDialog/fuelnamedialog.h \
+        FuelNameDialog/viewfuelnamedialog.h \
         LoggingCategories/loggingcategories.h \
         RunSqlDialog/runsqldialog.h \
         SQLHighlighter/SQLHighlighter.h \
@@ -120,8 +124,10 @@ HEADERS += \
         mainwindow.h
 
 FORMS += \
+        ChangeFuelNameDialog/changefuelnamedialog.ui \
         ConnectionSettingDialog/connectionsettingdialog.ui \
         FuelNameDialog/fuelnamedialog.ui \
+        FuelNameDialog/viewfuelnamedialog.ui \
         RunSqlDialog/runsqldialog.ui \
         SelectTerminalsForm/addterminalsdialog.ui \
         SelectTerminalsForm/selectterminalsform.ui \

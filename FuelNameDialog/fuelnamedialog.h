@@ -24,9 +24,6 @@ signals:
 
 private slots:
     void on_pushButtonView_clicked();
-
-    void on_pushButtonExcel_clicked();
-
 private:
     void showFuelName(int typeView);
 private:

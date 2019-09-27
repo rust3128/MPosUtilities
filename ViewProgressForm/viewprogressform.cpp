@@ -1,5 +1,6 @@
 #include "viewprogressform.h"
 #include "ui_viewprogressform.h"
+#include "FuelNameDialog/viewfuelnamedialog.h"
 
 
 
@@ -55,7 +56,6 @@ void ViewProgressForm::slotGetTerminalsList(QList<int> *list)
 void ViewProgressForm::slotGetListSQL(QStringList sql)
 {
     m_listSQL =sql;
-    qDebug(logDebug()) << "SQL" << m_listSQL;
 }
 
 void ViewProgressForm::slotRunSQL(int type)
@@ -79,6 +79,7 @@ void ViewProgressForm::slotRunSQL(int type)
         //Связываем сигналы и слоты
         connect(thread,&QThread::started, execSQL, &ExecuteSqlClass::executeSQL);
         connect(execSQL,&ExecuteSqlClass::signalSendStatus,this,&ViewProgressForm::slotGetStatusThread,Qt::UniqueConnection);
+        connect(execSQL,&ExecuteSqlClass::signalSendAzsFuelName,this,&ViewProgressForm::slotGetAzsFuelName,Qt::DirectConnection);
         connect(execSQL,&ExecuteSqlClass::finisExecute, execSQL, &ExecuteSqlClass::deleteLater);
         connect(execSQL,&ExecuteSqlClass::finisExecute, thread, &QThread::quit);
         connect(thread, &QThread::finished, thread, &QThread::deleteLater);
@@ -140,7 +141,10 @@ void ViewProgressForm::slotGetStatusThread(statusThread status)
     ui->progressBarGetFuel->setFormat("Обработано %v из %m. Ошибок "+QString::number(m_colError));
     if(ui->progressBarGetFuel->value() == m_connectionsList.size()){
         switch (m_typeSQL) {
-        case EXECUTE_SQL:
+        case SIMPLE_SQL:
+            break;
+        case SHOW_FUEL_NAME:
+            showFuelName();
             break;
         default:
             break;
@@ -171,6 +175,13 @@ void ViewProgressForm::getConnectionsList()
         list << q.value(0).toString() << q.value(1).toString() << q.value(2).toString()  << passConv(q.value(3).toString());
         m_connectionsList.append(list);
     }
+}
+
+void ViewProgressForm::showFuelName()
+{
+    std::sort(m_listFuelName.begin(), m_listFuelName.end(),compare);
+    ViewFuelNameDialog *viewFuelName = new ViewFuelNameDialog(&m_listFuelName,this);
+    viewFuelName->exec();
 }
 
 void ViewProgressForm::paintEvent(QPaintEvent *event)

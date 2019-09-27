@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MPos Инструментарий</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resourses.qrc">
+    <normaloff>:/Images/splash.png</normaloff>:/Images/splash.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -34,7 +38,9 @@
      <property name="title">
       <string>Наименования топлива</string>
      </property>
+     <addaction name="actionChangeFuel"/>
      <addaction name="actionFuelName"/>
+     <addaction name="separator"/>
      <addaction name="actionShowFuelName"/>
     </widget>
     <addaction name="menuName"/>
@@ -55,7 +61,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionChangeFuel"/>
    <addaction name="actionFuelName"/>
+   <addaction name="separator"/>
    <addaction name="actionRunSql"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -70,6 +78,9 @@
    <property name="statusTip">
     <string>Просмотр наименований топлива на АЗС</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+V</string>
+   </property>
   </action>
   <action name="actionRunSql">
    <property name="icon">
@@ -79,10 +90,28 @@
    <property name="text">
     <string>Выполнить скрипт</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+R</string>
+   </property>
   </action>
   <action name="actionShowFuelName">
    <property name="text">
     <string>Справочник наименований</string>
+   </property>
+  </action>
+  <action name="actionChangeFuel">
+   <property name="icon">
+    <iconset resource="resourses.qrc">
+     <normaloff>:/Images/changefuelname.png</normaloff>:/Images/changefuelname.png</iconset>
+   </property>
+   <property name="text">
+    <string>Изменение наименований</string>
+   </property>
+   <property name="statusTip">
+    <string>Изменение наименований топлива на АЗС</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
    </property>
   </action>
  </widget>
