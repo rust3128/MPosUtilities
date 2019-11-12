@@ -4,6 +4,7 @@
 #include <QRadioButton>
 #include <QMessageBox>
 #include <QDate>
+#include <QTextCodec>
 
 ChangeFuelNameDialog::ChangeFuelNameDialog(QSqlQueryModel *mod, QWidget *parent) :
     QDialog(parent),
@@ -152,6 +153,10 @@ void ChangeFuelNameDialog::on_pushButton_clicked()
 void ChangeFuelNameDialog::insertMigrateOptions(QString strSQL)
 {
     int runScriptCroupID;
+    QByteArray result = QByteArray::fromStdString(strSQL.toStdString());
+    //QByteArray result = QTextCodec::codecForName("Windows-1251")->fromUnicode(strSQL).toPercentEncoding();
+    QTextCodec* codec = QTextCodec::codecForName("Windows-1251");
+    QString str = codec->toUnicode(result);
     QSqlQuery q;
     q.exec("SELECT GEN_ID(GEN_RUNSCRIPTSGROUPS,1) FROM RDB$DATABASE");
     q.next();

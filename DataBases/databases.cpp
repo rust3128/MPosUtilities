@@ -103,6 +103,7 @@ bool DataBases::connectCenralDB()
     db.setDatabaseName(settings.value("DataBase").toString());
     db.setUserName(settings.value("User").toString());
     db.setPassword(settings.value("Password").toString());
+    db.setConnectOptions("ISC_DPB_LC_CTYPE=WIN1251");
     settings.endGroup();
     //Открываем базу данных, если попытка не удачная вызываем диалог настроек подключения
     if(!db.open()) {
