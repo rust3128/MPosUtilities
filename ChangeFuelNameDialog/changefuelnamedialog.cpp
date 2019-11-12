@@ -81,6 +81,8 @@ void ChangeFuelNameDialog::createUI()
 
 }
 
+
+
 void ChangeFuelNameDialog::on_pushButton_clicked()
 {
     m_terminals.clear();
@@ -91,6 +93,7 @@ void ChangeFuelNameDialog::on_pushButton_clicked()
     }
 
     listSQL.clear();
+    QString script;
     QString VPName="";
     QString dtName="";
     if(ui->groupBoxDP->isChecked()){
@@ -115,12 +118,57 @@ void ChangeFuelNameDialog::on_pushButton_clicked()
         QMessageBox::warning(this, "Ошибка","Не выбрано ни одного наименования!");
         return;
     }
+    script.clear();
     if(dtName.size()>0)
-        listSQL << "UPDATE FUELS SET NAME = '"+dtName+"' WHERE FUEL_ID = 7;";
+        script += "UPDATE FUELS SET NAME = '"+dtName+"' WHERE FUEL_ID = 7;\n";
     if(VPName.size()>0)
-        listSQL << "UPDATE FUELS SET NAME = '"+VPName+"' WHERE FUEL_ID = 8;";
-    listSQL << "UPDATE OR INSERT INTO MIGRATEOPTIONS (MIGRATEOPTION_ID, SVALUE, VTYPE) VALUES (3400, '"+ui->dateEdit->date().toString("yyyyMMdd")+"', 'D') MATCHING (MIGRATEOPTION_ID)";
-    listSQL << "UPDATE OR INSERT INTO MIGRATEOPTIONS (MIGRATEOPTION_ID, SVALUE, VTYPE) VALUES (3410, '6', 'I') MATCHING (MIGRATEOPTION_ID)";
-    listSQL << "commit;";
-    qDebug(logDebug()) << endl << listSQL;
+        script += "UPDATE FUELS SET NAME = '"+VPName+"' WHERE FUEL_ID = 8;\n";
+    script += "UPDATE OR INSERT INTO MIGRATEOPTIONS (MIGRATEOPTION_ID, SVALUE, VTYPE) VALUES (3400, '"+ui->dateEdit->date().toString("yyyyMMdd")+"', 'D') MATCHING (MIGRATEOPTION_ID);\n";
+    script += "UPDATE OR INSERT INTO MIGRATEOPTIONS (MIGRATEOPTION_ID, SVALUE, VTYPE) VALUES (3410, '6', 'I') MATCHING (MIGRATEOPTION_ID);\n";
+    script += "commit;\n";
+
+    int result = QMessageBox::question(this,"Подтверждение операци",
+                                       QString("На выбранных станциях %1 будут установлены следующие наименования:\n"
+                                               "%2\n"
+                                               "%3\n\n"
+                                               "Подтверждаете операцию?").arg(ui->dateEdit->date().toString("dd.MM.yyyy")).arg(dtName).arg(VPName));
+    if(result == QMessageBox::Yes){
+        qDebug(logDebug()) << endl << script;
+        QMessageBox::information(this,"script",script);
+        insertMigrateOptions(script);
+//        ui->widgetProgress->show();
+//        ui->widgetTerminals->hide();
+//        ui->frame->setEnabled(false);
+//        emit signalSendSQL(listSQL);
+//        emit signalSendTerminals(&m_terminals);
+//        emit signalRunSQL(SIMPLE_SQL);
+    } else {
+        ui->groupBoxDP->setChecked(false);
+        ui->groupBoxVPD->setChecked(false);
+    }
+
+}
+
+void ChangeFuelNameDialog::insertMigrateOptions(QString strSQL)
+{
+    int runScriptCroupID;
+    QSqlQuery q;
+    q.exec("SELECT GEN_ID(GEN_RUNSCRIPTSGROUPS,1) FROM RDB$DATABASE");
+    q.next();
+    runScriptCroupID = q.value(0).toInt();
+    q.finish();
+    foreach (int terminalID, m_terminals) {
+        q.prepare("INSERT INTO RUNSCRIPTS (TERMINAL_ID, RUNSCRIPT_ID, RUNSCRIPTSGROUP_ID, CONNECT_ID, RUNDAT, SQLDATA, NEED_RESTART, APPLY, ISERROR, RESTARTMSG, RUNSRIPT_TYPE, DPROCESSED) "
+                       "VALUES (:terminalID, GEN_ID(GEN_RUNSCRIPTS,1), :runScriptGroupID, 2, :scriptDate, :script, 'F', 'F', 'F', '', 0, NULL)");
+        q.bindValue(":terminalID", terminalID);
+        q.bindValue(":runScriptGroupID",runScriptCroupID);
+        q.bindValue(":scriptDate", ui->dateEdit->date().toString("yyyy-MM-dd ")+"23:15:00");
+        q.bindValue(":script" , strSQL);
+        if(!q.exec()) qCritical(logCritical()) << "Не возможно добавить скрипт для АЗС" << terminalID << q.lastError().text();
+    }
+}
+
+void ChangeFuelNameDialog::on_buttonBox_rejected()
+{
+    this->reject();
 }

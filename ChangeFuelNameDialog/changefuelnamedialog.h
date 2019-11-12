@@ -27,9 +27,12 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_buttonBox_rejected();
+
 private:
     void createConnections();
     void createUI();
+    void insertMigrateOptions(QString strSQL);
 private:
     Ui::ChangeFuelNameDialog *ui;
     QSqlQueryModel *m_model;
