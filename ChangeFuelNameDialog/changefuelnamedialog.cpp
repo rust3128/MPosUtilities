@@ -134,7 +134,7 @@ void ChangeFuelNameDialog::on_pushButton_clicked()
                                                "%3\n\n"
                                                "Подтверждаете операцию?").arg(ui->dateEdit->date().toString("dd.MM.yyyy")).arg(dtName).arg(VPName));
     if(result == QMessageBox::Yes){
-        qDebug(logDebug()) << endl << script;
+
         QMessageBox::information(this,"script",script);
         insertMigrateOptions(script);
 //        ui->widgetProgress->show();
@@ -153,22 +153,45 @@ void ChangeFuelNameDialog::on_pushButton_clicked()
 void ChangeFuelNameDialog::insertMigrateOptions(QString strSQL)
 {
     int runScriptCroupID;
-    QByteArray result = QByteArray::fromStdString(strSQL.toStdString());
-    //QByteArray result = QTextCodec::codecForName("Windows-1251")->fromUnicode(strSQL).toPercentEncoding();
-    QTextCodec* codec = QTextCodec::codecForName("Windows-1251");
-    QString str = codec->toUnicode(result);
+
     QSqlQuery q;
     q.exec("SELECT GEN_ID(GEN_RUNSCRIPTSGROUPS,1) FROM RDB$DATABASE");
     q.next();
     runScriptCroupID = q.value(0).toInt();
     q.finish();
+
+//    QByteArray result;
+//    QTextCodec* codecU = QTextCodec::codecForName("UTF-8");
+////    QTextCodec* codecW = QTextCodec::codecForName("Windows-1251");
+//    QTextCodec* codecW = QTextCodec::codecForLocale();
+//    result.insert(0, strSQL);
+//    strSQL = codecU->toUnicode(result);
+//    strSQL = codecW->fromUnicode(strSQL);
+
+//    QTextCodec* codec1;
+//    QTextCodec* codec2;
+
+//    codec1 = QTextCodec::codecForName("UTF-8");
+//    codec2 = QTextCodec::codecForName("windows-1251");
+
+////    QString strSQL = "...";
+//    QByteArray byteArrayContent;
+//    byteArrayContent.insert(0, strSQL);
+//    strSQL = codec1->toUnicode(byteArrayContent);
+//    strSQL = codec2->fromUnicode(strSQL);
+//    qDebug(logDebug()) << endl << strSQL;
+
+        QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+        QByteArray encodingString = codec->fromUnicode(strSQL);
+        QString encodingSQL = encodingString;
+        qDebug(logDebug()) << endl << encodingSQL;
     foreach (int terminalID, m_terminals) {
         q.prepare("INSERT INTO RUNSCRIPTS (TERMINAL_ID, RUNSCRIPT_ID, RUNSCRIPTSGROUP_ID, CONNECT_ID, RUNDAT, SQLDATA, NEED_RESTART, APPLY, ISERROR, RESTARTMSG, RUNSRIPT_TYPE, DPROCESSED) "
                        "VALUES (:terminalID, GEN_ID(GEN_RUNSCRIPTS,1), :runScriptGroupID, 2, :scriptDate, :script, 'F', 'F', 'F', '', 0, NULL)");
         q.bindValue(":terminalID", terminalID);
         q.bindValue(":runScriptGroupID",runScriptCroupID);
         q.bindValue(":scriptDate", ui->dateEdit->date().toString("yyyy-MM-dd ")+"23:15:00");
-        q.bindValue(":script" , strSQL);
+        q.bindValue(":script" , encodingSQL);
         if(!q.exec()) qCritical(logCritical()) << "Не возможно добавить скрипт для АЗС" << terminalID << q.lastError().text();
     }
 }
